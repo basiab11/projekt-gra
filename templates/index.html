@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gra Memo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='projekt.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>GRA MEMORY!</h1>
+    <h2> Znajdź drugą potęgę liczby!</h2>
+    <div class = "buttons">
+        <form method ="POST" action="/">
+            <button type="submit" name ="difficulty" value="latwy">Łatwy</button>
+        </form>
+        <form method ="POST" action="/">
+            <button type="submit" name="difficulty" value="sredni">Średni</button>
+        </form>
+        <form method ="POST" action="/">
+            <button type="submit" name="difficulty" value="trudny">Trudny</button>
+        </form>
+    </div>
+    <div class ="game-board {{ level }}" id="game-board">
+        {% for card in cards %}
+            {% if '*' in card.tekst %}
+                {% set typ = card.tekst.split('*')[0] %}
+                {% set wartosc = card.tekst.split('*')[1] %}
+            {% else %}
+                {% set typ = '' %}
+                {% set wartosc = card.tekst %}
+            {% endif %}
+            
+            <div class="card" 
+                data-pair-id="{{ card.id }}" 
+                data-type="{{ card.typ }}" 
+                data-value="{{ card.tekst }}" 
+                onclick="flipCard(this)">
+            ?
+        </div>
+        {% endfor %}
+    </div>
+    <div class="top-bar">
+        <p class="moves">Ruchy: <span id="moveCount">0</span></p>
+        </div>
+    <script src="{{ url_for('static', filename='projekt1.js') }}"></script>
+</body>
+</html>
